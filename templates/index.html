@@ -123,6 +123,7 @@
       <!-- Navigation Links (matches reference typography) -->
       <div class="nav-links">
         <a href="#hero" class="nav-link active">Home</a>
+        <a href="#upload-section" class="nav-link" id="nav-link-webcam">📹 Live Webcam</a>
         <a href="#upload-section" class="nav-link">Pipeline</a>
         <a href="#results-section" class="nav-link">Results</a>
         <a href="#matches-section" class="nav-link">Matches</a>
@@ -226,11 +227,22 @@
           <div class="card-header">
             <div class="card-header__icon">📷</div>
             <div class="card-header__info">
-              <h2 class="card-header__title">Upload Face Image</h2>
-              <p class="card-header__subtitle">Select an image to detect faces, reverse-search visual matches, and anchor on Ethereum</p>
+              <h2 class="card-header__title">Provide Face Image</h2>
+              <p class="card-header__subtitle">Upload an image file or use your live webcam to run the verification pipeline</p>
             </div>
           </div>
 
+          <!-- Mode Switcher Tabs -->
+          <div class="input-mode-tabs">
+            <button type="button" class="mode-tab active" id="tab-file-mode">
+              <span>📁 Upload Image</span>
+            </button>
+            <button type="button" class="mode-tab" id="tab-webcam-mode">
+              <span>📹 Live Webcam</span>
+            </button>
+          </div>
+
+          <!-- Mode 1: File Dropzone -->
           <div class="upload-zone" id="upload-zone">
             <input type="file" id="file-input" accept="image/*">
             <div class="upload-zone__circle-icon">📁</div>
@@ -239,6 +251,54 @@
             </div>
             <div class="upload-zone__hint">
               Supports JPEG, PNG · Max 16 MB
+            </div>
+            <div class="upload-zone__or-divider">
+              <span>OR</span>
+            </div>
+            <button type="button" class="btn btn-webcam-quick" id="quick-webcam-btn">
+              <span>📹 Use Live Webcam</span>
+            </button>
+          </div>
+
+          <!-- Mode 2: Live Webcam Capture Zone -->
+          <div class="webcam-zone" id="webcam-zone" style="display: none;">
+            <div class="webcam-viewport">
+              <video id="webcam-video" autoplay playsinline muted></video>
+              <canvas id="webcam-canvas" style="display: none;"></canvas>
+
+              <!-- Viewfinder targeting guide -->
+              <div class="webcam-viewfinder">
+                <div class="viewfinder-frame">
+                  <div class="vf-corner top-left"></div>
+                  <div class="vf-corner top-right"></div>
+                  <div class="vf-corner bottom-left"></div>
+                  <div class="vf-corner bottom-right"></div>
+                  <div class="viewfinder-crosshair"></div>
+                </div>
+                <div class="viewfinder-badge">
+                  <span class="live-pulse-dot"></span>
+                  <span id="viewfinder-status-text">Position face inside frame</span>
+                </div>
+              </div>
+
+              <!-- Shutter Flash Effect -->
+              <div class="webcam-flash" id="webcam-flash"></div>
+            </div>
+
+            <!-- Webcam Controls Bar -->
+            <div class="webcam-toolbar">
+              <button type="button" class="btn btn-capture" id="btn-capture-photo">
+                <span class="btn-capture__ring">
+                  <span class="btn-capture__inner"></span>
+                </span>
+                <span>📸 Capture Photo</span>
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-retake-photo" style="display: none;">
+                🔄 Retake
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-close-webcam">
+                ✕ Switch to File Upload
+              </button>
             </div>
           </div>
 

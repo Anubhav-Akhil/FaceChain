@@ -26,6 +26,23 @@ const summaryBar = document.getElementById('summary-bar');
 const errorBanner = document.getElementById('error-banner');
 const errorText = document.getElementById('error-text');
 
+// ── Webcam Elements ───────────────────────────────────────────
+const tabFileMode = document.getElementById('tab-file-mode');
+const tabWebcamMode = document.getElementById('tab-webcam-mode');
+const webcamZone = document.getElementById('webcam-zone');
+const webcamVideo = document.getElementById('webcam-video');
+const webcamCanvas = document.getElementById('webcam-canvas');
+const webcamFlash = document.getElementById('webcam-flash');
+const btnCapturePhoto = document.getElementById('btn-capture-photo');
+const btnRetakePhoto = document.getElementById('btn-retake-photo');
+const btnCloseWebcam = document.getElementById('btn-close-webcam');
+const quickWebcamBtn = document.getElementById('quick-webcam-btn');
+const navLinkWebcam = document.getElementById('nav-link-webcam');
+const viewfinderStatusText = document.getElementById('viewfinder-status-text');
+
+let webcamStream = null;
+let isWebcamCaptured = false;
+
 // ── State ─────────────────────────────────────────────────────
 let selectedFile = null;
 let currentEventSource = null;
@@ -95,6 +112,151 @@ function formatFileSize(bytes) {
   if (bytes < 1024) return bytes + ' B';
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
   return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+// ── Webcam Lifecycle & Capture ────────────────────────────────
+
+async function startWebcam() {
+  try {
+    if (webcamStream) return;
+    if (viewfinderStatusText) viewfinderStatusText.textContent = 'Connecting to camera…';
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'user',
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+      },
+      audio: false,
+    });
+
+    webcamStream = stream;
+    if (webcamVideo) {
+      webcamVideo.srcObject = stream;
+      await webcamVideo.play();
+    }
+    if (viewfinderStatusText) viewfinderStatusText.textContent = 'Position face inside frame';
+  } catch (err) {
+    console.error('Webcam access error:', err);
+    showError('Camera access denied or unavailable. Please grant camera permissions.');
+    switchToUploadMode();
+  }
+}
+
+function stopWebcam() {
+  if (webcamStream) {
+    webcamStream.getTracks().forEach((track) => track.stop());
+    webcamStream = null;
+  }
+  if (webcamVideo) {
+    webcamVideo.srcObject = null;
+  }
+  isWebcamCaptured = false;
+}
+
+function switchToWebcamMode() {
+  if (tabWebcamMode) tabWebcamMode.classList.add('active');
+  if (tabFileMode) tabFileMode.classList.remove('active');
+  if (uploadZone) uploadZone.style.display = 'none';
+  if (webcamZone) webcamZone.style.display = 'flex';
+  if (btnRetakePhoto) btnRetakePhoto.style.display = 'none';
+  if (btnCapturePhoto) btnCapturePhoto.style.display = 'inline-flex';
+  startWebcam();
+}
+
+function switchToUploadMode() {
+  if (tabFileMode) tabFileMode.classList.add('active');
+  if (tabWebcamMode) tabWebcamMode.classList.remove('active');
+  if (uploadZone) uploadZone.style.display = 'block';
+  if (webcamZone) webcamZone.style.display = 'none';
+  stopWebcam();
+}
+
+function captureWebcamPhoto() {
+  if (!webcamVideo || !webcamStream) return;
+
+  // Flash animation
+  if (webcamFlash) {
+    webcamFlash.classList.add('flash');
+    setTimeout(() => webcamFlash.classList.remove('flash'), 180);
+  }
+
+  // Draw current video frame to canvas
+  const canvas = webcamCanvas;
+  canvas.width = webcamVideo.videoWidth || 640;
+  canvas.height = webcamVideo.videoHeight || 480;
+  const ctx = canvas.getContext('2d');
+
+  // Flip horizontally to save naturally as seen in the mirrored selfie preview
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
+  ctx.drawImage(webcamVideo, 0, 0, canvas.width, canvas.height);
+
+  // Convert canvas to Blob / File
+  canvas.toBlob((blob) => {
+    if (!blob) {
+      showError('Failed to capture frame from webcam');
+      return;
+    }
+
+    const capturedFile = new File([blob], `webcam_face_${Date.now()}.jpg`, { type: 'image/jpeg' });
+    handleFile(capturedFile);
+
+    isWebcamCaptured = true;
+    if (btnCapturePhoto) btnCapturePhoto.style.display = 'none';
+    if (btnRetakePhoto) btnRetakePhoto.style.display = 'inline-flex';
+    if (viewfinderStatusText) {
+      viewfinderStatusText.textContent = '✓ Photo Captured! Ready to run pipeline.';
+    }
+
+    showToast('Photo captured successfully!');
+  }, 'image/jpeg', 0.95);
+}
+
+function retakeWebcamPhoto() {
+  isWebcamCaptured = false;
+  if (btnCapturePhoto) btnCapturePhoto.style.display = 'inline-flex';
+  if (btnRetakePhoto) btnRetakePhoto.style.display = 'none';
+  if (viewfinderStatusText) {
+    viewfinderStatusText.textContent = 'Position face inside frame';
+  }
+  if (uploadPreview) uploadPreview.classList.remove('visible');
+  selectedFile = null;
+  if (runBtn) runBtn.disabled = true;
+  hideResults();
+}
+
+// ── Webcam Event Listeners ────────────────────────────────────
+if (tabWebcamMode) {
+  tabWebcamMode.addEventListener('click', switchToWebcamMode);
+}
+if (tabFileMode) {
+  tabFileMode.addEventListener('click', switchToUploadMode);
+}
+if (quickWebcamBtn) {
+  quickWebcamBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    switchToWebcamMode();
+  });
+}
+if (btnCloseWebcam) {
+  btnCloseWebcam.addEventListener('click', switchToUploadMode);
+}
+if (btnCapturePhoto) {
+  btnCapturePhoto.addEventListener('click', captureWebcamPhoto);
+}
+if (btnRetakePhoto) {
+  btnRetakePhoto.addEventListener('click', retakeWebcamPhoto);
+}
+if (navLinkWebcam) {
+  navLinkWebcam.addEventListener('click', (e) => {
+    e.preventDefault();
+    const section = document.getElementById('upload-section');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+    switchToWebcamMode();
+  });
 }
 
 // ── Run Pipeline ──────────────────────────────────────────────
