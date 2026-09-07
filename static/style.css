@@ -416,6 +416,16 @@ button {
   flex-shrink: 0;
 }
 
+.card-header__icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #ffffff;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .card-header__title {
   font-size: 20px;
   font-weight: 700;
@@ -450,7 +460,19 @@ button {
 }
 
 .error-banner__icon {
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.error-banner__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--red);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ── Summary Bar ────────────────────────────────────────────── */
@@ -478,6 +500,17 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.summary-bar__item svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--purple-700);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
 }
 
 .summary-bar__divider {
@@ -530,9 +563,24 @@ button {
   transition: var(--transition);
 }
 
+.upload-zone__circle-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--purple-700);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: var(--transition);
+}
+
 .upload-zone:hover .upload-zone__circle-icon {
   transform: scale(1.08);
   box-shadow: 0 6px 16px rgba(124, 58, 237, 0.2);
+}
+
+.upload-zone:hover .upload-zone__circle-icon svg {
+  stroke: var(--purple-600);
 }
 
 .upload-zone__text {
@@ -1052,6 +1100,22 @@ button {
   transition: var(--transition);
 }
 
+.pipeline-step__icon-wrap svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--purple-700);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: var(--transition);
+}
+
+.pipeline-step.done .pipeline-step__icon-wrap svg,
+.pipeline-step.completed .pipeline-step__icon-wrap svg {
+  stroke: #ffffff;
+}
+
 .pipeline-step__connector {
   position: absolute;
   top: 24px;
@@ -1168,7 +1232,24 @@ button {
 }
 
 .section-title__icon {
-  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--purple-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-title__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--purple-700);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .section-title__text {
@@ -1224,6 +1305,16 @@ button {
 .result-card__icon.purple {
   background: var(--purple-100);
   color: var(--purple-700);
+}
+
+.result-card__icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--purple-700);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .result-card__title {
@@ -1488,10 +1579,30 @@ button {
   transition: var(--transition);
 }
 
+.copy-btn svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .copy-btn:hover {
   background: var(--purple-700);
   color: var(--text-white);
   border-color: var(--purple-700);
+}
+
+.match-card__thumb-placeholder svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--purple-300);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ═════════════════════════════════════════════════════════════

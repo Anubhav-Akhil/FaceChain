@@ -43,17 +43,22 @@ const viewfinderStatusText = document.getElementById('viewfinder-status-text');
 let webcamStream = null;
 let isWebcamCaptured = false;
 
+// ── SVG Icons ─────────────────────────────────────────────────
+const COPY_SVG = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+const THUMB_SVG = `<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+const CHECK_SVG = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+
 // ── State ─────────────────────────────────────────────────────
 let selectedFile = null;
 let currentEventSource = null;
 
 // ── Pipeline Stage Definitions ────────────────────────────────
 const STAGES = [
-  { id: 'face_detection', label: 'Face Detect', icon: '🧠' },
-  { id: 'image_upload', label: 'Upload', icon: '☁️' },
-  { id: 'reverse_search', label: 'Search', icon: '🔍' },
-  { id: 'blockchain', label: 'Blockchain', icon: '⛓️' },
-  { id: 'verification', label: 'Verify', icon: '✅' },
+  { id: 'face_detection', label: 'Face Detect' },
+  { id: 'image_upload', label: 'Upload' },
+  { id: 'reverse_search', label: 'Search' },
+  { id: 'blockchain', label: 'Blockchain' },
+  { id: 'verification', label: 'Verify' },
 ];
 
 // ── Upload Handling ───────────────────────────────────────────
@@ -606,7 +611,7 @@ function renderResults(data) {
     const hashEl = document.getElementById('bc-hash');
     if (bc.data_hash && hashEl) {
       hashEl.innerHTML = `<span>${truncate('0x' + bc.data_hash, 22)}</span>
-        <button class="copy-btn" onclick="copyText('0x${bc.data_hash}')" title="Copy">📋</button>`;
+        <button class="copy-btn" onclick="copyText('0x${bc.data_hash}')" title="Copy">${COPY_SVG} Copy</button>`;
     }
   } else {
     setResultValue('bc-status', 'Confirmed ✓');
@@ -616,7 +621,7 @@ function renderResults(data) {
     const txEl = document.getElementById('bc-tx');
     if (bc.tx_hash) {
       txEl.innerHTML = `<span>${truncate('0x' + bc.tx_hash, 22)}</span>
-        <button class="copy-btn" onclick="copyText('0x${bc.tx_hash}')" title="Copy">📋</button>`;
+        <button class="copy-btn" onclick="copyText('0x${bc.tx_hash}')" title="Copy">${COPY_SVG} Copy</button>`;
     }
 
     const ethLink = document.getElementById('bc-etherscan-link');
@@ -629,7 +634,7 @@ function renderResults(data) {
     const hashEl = document.getElementById('bc-hash');
     if (bc.data_hash && hashEl) {
       hashEl.innerHTML = `<span>${truncate('0x' + bc.data_hash, 22)}</span>
-        <button class="copy-btn" onclick="copyText('0x${bc.data_hash}')" title="Copy">📋</button>`;
+        <button class="copy-btn" onclick="copyText('0x${bc.data_hash}')" title="Copy">${COPY_SVG} Copy</button>`;
     }
   }
 
@@ -681,8 +686,8 @@ function renderMatches(data) {
     card.style.animation = 'fadeSlideIn 0.4s ease-out both';
 
     const thumbHtml = match.thumbnail
-      ? `<img src="${match.thumbnail}" alt="${escapeHtml(match.title || '')}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'match-card__thumb-placeholder\\'>🖼️</div>'">`
-      : `<div class="match-card__thumb-placeholder">🖼️</div>`;
+      ? `<img src="${match.thumbnail}" alt="${escapeHtml(match.title || '')}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'match-card__thumb-placeholder\\'>${THUMB_SVG}</div>'">`
+      : `<div class="match-card__thumb-placeholder">${THUMB_SVG}</div>`;
 
     const badgeHtml = isSocial
       ? '<span class="badge badge-social">Social</span>'
@@ -821,7 +826,7 @@ function showToast(message) {
 
   const toast = document.createElement('div');
   toast.className = 'toast';
-  toast.innerHTML = `<span>✓</span> ${message}`;
+  toast.innerHTML = `${CHECK_SVG} <span>${escapeHtml(message)}</span>`;
   document.body.appendChild(toast);
 
   setTimeout(() => {
