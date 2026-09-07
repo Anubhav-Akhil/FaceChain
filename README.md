@@ -1,296 +1,259 @@
-# 🧠 Face ID + Blockchain Verification Pipeline
+# 🧠 FaceChain — Biometric Intelligence & Blockchain Verification
 
-**HH Goa 2026 — Shortlisting Task 3**
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Ethereum Sepolia](https://img.shields.io/badge/Ethereum-Sepolia_Testnet-627EEA.svg?style=for-the-badge&logo=ethereum&logoColor=white)](https://sepolia.etherscan.io/)
+[![Solidity 0.8.19](https://img.shields.io/badge/Solidity-0.8.19-363636.svg?style=for-the-badge&logo=solidity&logoColor=white)](https://soliditylang.org/)
+[![OpenCV DNN](https://img.shields.io/badge/OpenCV-DNN_Face_Detect-5C3EE8.svg?style=for-the-badge&logo=opencv&logoColor=white)](https://opencv.org/)
+[![Google Lens](https://img.shields.io/badge/Google_Lens-SerpAPI-4285F4.svg?style=for-the-badge&logo=google&logoColor=white)](https://serpapi.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-An end-to-end Python pipeline that takes a face image as input, identifies matching content on the web/social media via genuine reverse image search, and writes a tamper-evident verification record to the Ethereum blockchain.
+**HH Goa 2026 — Task 3**  
+*Developed by **Anubhav Akhil** ([meanubhavakhil@gmail.com](mailto:meanubhavakhil@gmail.com))*
+
+---
+
+## 🌟 Executive Summary
+
+**FaceChain** is an end-to-end biometric identity verification pipeline that combines deep learning computer vision, web-scale reverse image search, and Ethereum smart contracts. 
+
+It takes an input face (via image upload or live webcam), detects facial regions and computes high-dimensional perceptual encodings, tracks the face's digital footprint across the public web and social media via Google Lens, generates a cryptographic SHA-256 data hash, and anchors immutable proof onto the **Ethereum Sepolia Blockchain**.
 
 ```
-📷 Face Image → 🧠 Face Detection → 🔍 Reverse Search → ⛓️ Blockchain → ✅ Verified
-📹 Webcam     ↗
+📷 Image / 📹 Webcam ──▶ 🧠 Face Detection ──▶ ☁️ Cloud Upload ──▶ 🔍 Google Lens ──▶ ⛓️ Blockchain ──▶ ✅ On-Chain Verified
 ```
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Pipeline Flow
 
 ```
-┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
-│  Input Image │───▶│ Face Detect  │───▶│ Image Upload │───▶│ Google Lens  │───▶│  Blockchain  │
-│  (photo.jpg) │    │ & Encoding   │    │   (ImgBB)    │    │  (SerpAPI)   │    │  (Sepolia)   │
-└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
-                     OpenCV YuNet ONNX   Public URL          Visual matches     SHA-256 hash +
-                     128-d vector        for search          Social media       metadata stored
-                     + face crop                             prioritized        on-chain
+┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐
+│   Input Source  │──────▶│ Face Detection  │──────▶│  Image Hosting  │
+│  Image / Webcam │       │   OpenCV DNN    │       │     ImgBB CDN   │
+└─────────────────┘       └─────────────────┘       └─────────────────┘
+                                   │                         │
+                          128-d perceptual            Public URL for
+                             encoding                Google Lens indexing
+                                   │                         │
+                                   ▼                         ▼
+┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐
+│    On-Chain     │◀──────│   Blockchain    │◀──────│  Reverse Search │
+│  Verification   │       │ Ethereum Sepolia│       │   Google Lens   │
+└─────────────────┘       └─────────────────┘       └─────────────────┘
+ Immutable ledger audit    SHA-256 Hash Anchor      Visual match discovery
+   Tamper-proof check       Duplicate check          Social media priority
 ```
 
-### Pipeline Stages
+### The 5 Pipeline Stages
 
-| # | Stage | Technology | What It Does |
-|---|-------|-----------|--------------|
-| 1 | **Face Detection & Encoding** | OpenCV YuNet ONNX | Detects face(s), extracts 128-dimensional perceptual encoding, crops face with margin |
-| 2 | **Image Upload** | ImgBB API | Uploads cropped face to get a public URL (required for Google Lens) |
-| 3 | **Reverse Image Search** | SerpAPI (Google Lens) | Genuine reverse image search — finds visually matching web/social media posts |
-| 4 | **Blockchain Registration** | `web3.py` + Ethereum Sepolia | Computes SHA-256 hash of match data, stores hash + metadata on-chain |
-| 5 | **On-Chain Verification** | `web3.py` read call | Reads back the on-chain record and confirms data integrity |
+| Stage | Name | Technology | Functional Description |
+|---|---|---|---|
+| **1** | **Face Detection & Encoding** | OpenCV Deep Neural Network (DNN) / Haar | Detects face landmarks, bounds region, crops face with margin, and extracts 128-d perceptual biometric vectors with zero C++ compilation dependencies. |
+| **2** | **Image Upload** | ImgBB REST API | Uploads cropped facial query to obtain a high-speed public CDN URL required for visual indexing. |
+| **3** | **Reverse Image Search** | SerpAPI (Google Lens Engine) | Scans Google Lens visual graph across billions of web pages; filters and prioritizes social media profiles (Instagram, LinkedIn, Reddit, X/Twitter, etc.). |
+| **4** | **Blockchain Registration** | Solidity 0.8.19 + `web3.py` | Computes a cryptographic SHA-256 hash from query data and writes an immutable record to Ethereum Sepolia. Includes on-chain duplicate detection to prevent redundant transactions and save gas. |
+| **5** | **On-Chain Verification** | Ethereum View Calls (`web3.py`) | Reads back the record directly from the smart contract mapping, verifies SHA-256 integrity, registrant address, and timestamp. |
 
 ---
 
-## 📜 Deployed Smart Contract & Proof of Execution
+## 📜 Smart Contract & On-Chain Ledger
 
-- **Contract Address:** [`0x53f3451AC38F101c7faE5F252b30B24b29A0d644`](https://sepolia.etherscan.io/address/0x53f3451AC38F101c7faE5F252b30B24b29A0d644)
-- **Deployment Transaction:** [`0x60761901...`](https://sepolia.etherscan.io/tx/0x607619015d2ce54fa807db82d8024d80fe82f87de3fdc459d90302f8a0c92568)
-- **Live Verification Transaction:** [`0xe55d1038...`](https://sepolia.etherscan.io/tx/0xe55d10380435644b615b5a9bab30bb197a9f8df3f1ac66ca222d34b50f12fe40)
+- **Network:** Ethereum Sepolia Testnet (Chain ID: `11155111`)
+- **Smart Contract Address:** [`0x53f3451AC38F101c7faE5F252b30B24b29A0d644`](https://sepolia.etherscan.io/address/0x53f3451AC38F101c7faE5F252b30B24b29A0d644)
+- **Deployment Tx:** [`0x607619015d2ce54fa807db82d8024d80fe82f87de3fdc459d90302f8a0c92568`](https://sepolia.etherscan.io/tx/0x607619015d2ce54fa807db82d8024d80fe82f87de3fdc459d90302f8a0c92568)
+- **Verified Match Tx:** [`0xecdc3277f807c469a6958ad427c82039f31a084dbbb28c839443eaf14fe2c899`](https://sepolia.etherscan.io/tx/0xecdc3277f807c469a6958ad427c82039f31a084dbbb28c839443eaf14fe2c899)
+
+### Contract Interface (`FaceVerification.sol`)
+
+```solidity
+struct MatchRecord {
+    address registrant;     // Wallet address that registered the match
+    uint256 timestamp;      // Block timestamp of registration
+    string  imageURL;       // Public URL of the searched face
+    string  matchSource;    // Top URL / domain of matched profile
+    string  matchTitle;     // Headline / snippet from the match
+    bool    exists;         // Existence flag
+}
+
+function registerMatch(bytes32 _dataHash, string calldata _imageURL, string calldata _matchSource, string calldata _matchTitle) external;
+function verifyMatch(bytes32 _dataHash) external view returns (bool);
+function getRecord(bytes32 _dataHash) external view returns (address registrant, uint256 timestamp, string memory imageURL, string memory matchSource, string memory matchTitle);
+```
 
 ---
 
-## 🚀 Quick Start
+## 🎨 Dual User Interface
+
+### 1. Modern Web Application (Flask + Real-Time SSE)
+- **Purple Fluid Wave Hero Section**: Designed with multi-layered organic SVG wave curves and modern typography (Google Font Poppins).
+- **Interactive Top Navigation**:
+  - 🛡️ **Shield**: Smooth scrolls to Verification Pipeline with highlight pulse.
+  - 📞 **Phone**: Opens Contact & Support Modal with 1-click email copy.
+  - ✉️ **Mail**: Direct link to `meanubhavakhil@gmail.com`.
+  - 🔗 **Share**: Native device Web Share API + fallback clipboard copy with toast notifications.
+  - 🌐 **Globe**: Direct link to smart contract on Sepolia Etherscan.
+- **Real-Time Progress Stepper**: Active step rings, flowing animated gradient streams (`progressFlow`), and live 0% → 100% completion bar.
+- **Results Dashboard**: Detailed breakdown of face detection, CDN hosting, top search hit, gas metrics, block numbers, and verification status.
+- **Visual Match Gallery**: Responsive gallery grid of web/social media matches discovered by Google Lens, with category filter tabs (`All`, `Social Media`, `Web`).
+
+### 2. High-Performance CLI & Live Webcam
+- **File Input Mode**: Fast batch-friendly CLI processing.
+- **Live Webcam Mode (`--webcam`)**: Real-time camera feed with bounding box overlays, confidence score HUD, and on-demand `SPACE` key pipeline execution.
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
+- Python 3.9, 3.10, 3.11, 3.12, 3.13, or 3.14
+- Web browser (Chrome, Firefox, Edge, Safari)
+- Sepolia testnet ETH (free from [sepoliafaucet.com](https://sepoliafaucet.com/))
 
-- **Python 3.9+** (Tested and working on Python 3.14 on Windows)
-- **Zero C++ build tool dependencies** (Uses pure OpenCV ONNX DNN)
-- **Sepolia Test ETH** (Free from Sepolia faucets)
-
-### 1. Clone & Install
-
-```bash
-git clone https://github.com/YOUR_USERNAME/HHGOA-T3-FaceID-Blockchain.git
-cd HHGOA-T3-FaceID-Blockchain
-
-pip install -r requirements.txt
-```
-
-### 2. Get API Keys (all free)
-
-| Service | Sign Up | Free Tier |
-|---------|---------|-----------|
-| **SerpAPI** | [serpapi.com](https://serpapi.com/) | 250 searches/month |
-| **ImgBB** | [api.imgbb.com](https://api.imgbb.com/) | Unlimited uploads |
-| **Alchemy** | [alchemy.com](https://www.alchemy.com/) | 30M compute units/month |
-
-### 3. Configure Environment
+### 1. Clone the Repository
 
 ```bash
-# Copy the template
-copy .env.example .env    # Windows
-# cp .env.example .env    # macOS/Linux
-
-# Edit .env with your keys
+git clone https://github.com/Anubhav-Akhil/FaceChain.git
+cd FaceChain
 ```
 
-Fill in your `.env`:
+### 2. Install Dependencies
+
+```bash
+# Windows
+py -m pip install -r requirements.txt
+
+# Linux / macOS
+python3 -m pip install -r requirements.txt
+```
+
+### 3. Configure Environment Variables
+
+Copy the `.env.example` file to `.env`:
+
+```bash
+# Windows
+copy .env.example .env
+
+# Linux / macOS
+cp .env.example .env
+```
+
+Edit `.env` with your API credentials:
+
 ```env
-SERPAPI_KEY=<your SerpAPI key>
-IMGBB_API_KEY=<your ImgBB key>
-ALCHEMY_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/<your Alchemy key>
-PRIVATE_KEY=<your MetaMask private key>
+SERPAPI_KEY=your_serpapi_key_here
+IMGBB_API_KEY=your_imgbb_api_key_here
+ALCHEMY_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/your_alchemy_key
+PRIVATE_KEY=your_ethereum_wallet_private_key
+CONTRACT_ADDRESS=0x53f3451AC38F101c7faE5F252b30B24b29A0d644
 ```
 
-### 4. Get Sepolia Test ETH
-
-Visit [sepoliafaucet.com](https://sepoliafaucet.com/) and request free Sepolia ETH to your wallet address. You need a small amount (~0.01 ETH) for gas fees.
-
-### 5. Deploy the Smart Contract
-
-```bash
-python deploy_contract.py
-```
-
-This will:
-- Compile `FaceVerification.sol` using Solidity 0.8.19
-- Deploy to Ethereum Sepolia testnet
-- Automatically save the contract address to your `.env` file
-- Save the compiled ABI to `contracts/abi.json`
-
-### 6. Run the Pipeline
-
-```bash
-# From an image
-python run_pipeline.py --image path/to/photo.jpg
-
-# From live webcam
-python run_pipeline.py --webcam
-```
-
-#### CLI Options
-
-| Flag | Description | Default |
-|------|------------|---------|
-| `--image`, `-i` | Path to input image | — |
-| `--webcam`, `-w` | Launch live webcam mode | — |
-| `--model`, `-m` | Face detection model: `dnn` (accurate) or `haar` (fast) | `dnn` |
-| `--verbose`, `-v` | Enable debug output | `False` |
-| `--output`, `-o` | Save results to JSON file | — |
-
-> **Note:** `--image` and `--webcam` are mutually exclusive — use one or the other.
-
-#### Examples
-
-```bash
-# Basic usage with an image
-python run_pipeline.py --image selfie.jpg
-
-# High-accuracy detection + save results
-python run_pipeline.py --image celebrity.png --model dnn --output results.json
-
-# Live webcam mode
-python run_pipeline.py --webcam
-
-# Webcam with Haar cascade (faster, less accurate)
-python run_pipeline.py --webcam --model haar
-
-# Verbose mode for debugging
-python run_pipeline.py -i photo.jpg -v
-```
+*All external services offer generous free tiers:*
+- **SerpAPI:** 250 searches/month free ([serpapi.com](https://serpapi.com))
+- **ImgBB:** Free image hosting API ([api.imgbb.com](https://api.imgbb.com))
+- **Alchemy:** Free Sepolia node RPC ([alchemy.com](https://www.alchemy.com))
+- **MetaMask:** Test wallet for signing ([metamask.io](https://metamask.io))
 
 ---
 
-## 📹 Live Webcam Mode
+## 💻 Running the Application
 
-The webcam mode opens your camera and provides a real-time face detection overlay.
+### Option A: Launch the Web UI (Recommended)
 
 ```bash
-python run_pipeline.py --webcam
+# Start the Flask development server
+py app.py        # Windows
+python3 app.py   # Linux / macOS
 ```
 
-### Controls
+Open your browser and navigate to:
+👉 **`http://127.0.0.1:5000`**
 
-| Key | Action |
-|-----|--------|
-| `SPACE` | Capture current frame and run the full pipeline |
-| `Q` / `ESC` | Quit webcam mode |
-
-### Features
-
-- **Real-time face detection** — bounding boxes with confidence scores drawn on every frame
-- **HUD overlay** — shows face count, FPS, and controls
-- **On-demand pipeline** — press SPACE to trigger the full search + blockchain flow
-- **Mirrored preview** — natural selfie-style interaction
-- **No extra dependencies** — uses the same OpenCV already installed
+1. Drag and drop any image containing a face into the upload zone.
+2. Select your face detection model (`DNN` for high accuracy, `Haar` for speed).
+3. Click **🚀 Run Pipeline**.
+4. Watch the progress bar advance through all 5 stages in real time!
 
 ---
 
-## ⛓️ Blockchain Details
+### Option B: Run via Command Line Interface (CLI)
 
-### Which Blockchain?
+```bash
+# Run pipeline with a local image file
+py run_pipeline.py --image sample_images/input.jpg
 
-**Ethereum Sepolia Testnet** — a public Ethereum test network.
+# Save output to JSON
+py run_pipeline.py -i sample_images/input.jpg --output results.json
 
-| Property | Value |
-|----------|-------|
-| Network | Ethereum Sepolia (testnet) |
-| Chain ID | 11155111 |
-| Currency | SepoliaETH (free, no real value) |
-| Explorer | [sepolia.etherscan.io](https://sepolia.etherscan.io/) |
-
-### Smart Contract: `FaceVerification.sol`
-
-The contract stores face-match verification records as on-chain mappings:
-
-```
-SHA-256(match_data) → {registrant, timestamp, imageURL, matchSource, matchTitle}
+# Run with verbose debugging
+py run_pipeline.py -i sample_images/input.jpg --verbose
 ```
 
-**Key functions:**
-- `registerMatch(hash, imageURL, matchSource, matchTitle)` — writes a new record (costs gas)
-- `verifyMatch(hash)` → `bool` — checks if a record exists (free read)
-- `getRecord(hash)` → returns full record details (free read)
+### Option C: Live Webcam Mode
 
-### Tamper-Evidence
-
-The pipeline computes a **SHA-256 hash** of the combined match data:
-```
-hash = SHA-256(JSON({title, link, source, image_url}))
+```bash
+py run_pipeline.py --webcam
 ```
 
-This hash is stored on-chain. To verify:
-1. Re-compute the hash from the original match data
-2. Call `verifyMatch(hash)` on the contract
-3. If `true` → data has not been tampered with
-4. Call `getRecord(hash)` to retrieve the full stored record
-
-Anyone can verify the record on [Sepolia Etherscan](https://sepolia.etherscan.io/) using the transaction hash.
+- **`SPACE`**: Capture current frame and launch the verification pipeline.
+- **`Q` / `ESC`**: Quit webcam mode.
 
 ---
 
-## 📁 Project Structure
+## 📂 Repository Structure
 
 ```
-HHGOA T-3/
-├── README.md                    # This file
-├── requirements.txt             # Python dependencies
-├── .env.example                 # API key template
-├── .gitignore                   # Git exclusions
+FaceChain/
+├── app.py                     # Flask web server & SSE stream controller
+├── run_pipeline.py            # Command-line interface entry point
+├── deploy_contract.py         # Smart contract deployment script
+├── requirements.txt           # Python package dependencies
+├── .env.example               # Environment variables template
+├── .gitignore                 # Excluded files (keys, bytecode, uploads)
+├── README.md                  # Project documentation
 │
 ├── contracts/
-│   ├── FaceVerification.sol     # Solidity smart contract
-│   └── abi.json                 # Compiled ABI (generated by deploy script)
+│   ├── FaceVerification.sol  # Solidity 0.8.19 smart contract
+│   └── abi.json               # Compiled contract Application Binary Interface
 │
 ├── src/
-│   ├── __init__.py              # Package init
-│   ├── pipeline.py              # Main orchestrator
-│   ├── webcam.py                # Live webcam mode with real-time detection
-│   ├── face_detector.py         # Stage 1: Face detection & encoding
-│   ├── image_uploader.py        # Stage 2: ImgBB upload
-│   ├── reverse_search.py        # Stage 3: Google Lens search via SerpAPI
-│   ├── blockchain.py            # Stage 4 & 5: Blockchain write + verify
-│   └── utils.py                 # Shared helpers (hashing, config, logging)
+│   ├── __init__.py            # Package initialization
+│   ├── pipeline.py            # Pipeline orchestrator & SSE event streamer
+│   ├── blockchain.py          # Web3 client, duplicate checks & verification
+│   ├── face_detector.py       # OpenCV DNN & Haar face detection & encoding
+│   ├── image_uploader.py      # ImgBB CDN upload client
+│   ├── reverse_search.py      # Google Lens reverse search via SerpAPI
+│   ├── webcam.py              # Real-time webcam capture with HUD overlay
+│   └── utils.py               # Cryptographic hashing & config utilities
 │
-├── deploy_contract.py           # One-time contract deployment
-└── run_pipeline.py              # CLI entry point
+├── templates/
+│   └── index.html             # Main frontend template with purple wave hero
+│
+└── static/
+    ├── style.css              # Custom CSS design system (fluid waves, SaaS cards)
+    └── app.js                 # Drag-drop, SSE streaming, gallery & modals
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🛡️ Security & Integrity Highlights
 
-| Component | Technology |
-|-----------|-----------|
-| Language | Python 3.9+ |
-| Face Detection | `face_recognition` (dlib) |
-| Image Processing | Pillow, OpenCV |
-| Image Hosting | ImgBB API |
-| Reverse Image Search | SerpAPI (Google Lens engine) |
-| Blockchain | Ethereum Sepolia via `web3.py` |
-| Smart Contract | Solidity 0.8.19 |
-| Contract Compilation | `py-solc-x` |
-| CLI | argparse |
-| Output | `rich` (colored terminal output) |
+- **Pre-Execution Smart Contract Checks**: Before broadcasting a transaction, FaceChain checks whether the computed hash already exists on-chain. If previously registered, it prevents transaction reversion and avoids unnecessary gas fees while confirming on-chain integrity.
+- **Cryptographic Tamper-Evidence**: If even a single byte of the matched source URL, title, or image URL is modified, the SHA-256 hash recalculation fails verification against the smart contract record.
+- **Environment Safety**: Private keys and API tokens are restricted to `.env` and excluded from source control.
 
 ---
 
-## ⚠️ Known Limitations
+## 👨‍💻 Author & Contact
 
-1. **Face Detection Library**
-   - `face_recognition` / `dlib` requires C++ build tools and CMake on Windows, which can be tricky to install
-   - The HOG model is fast but less accurate for rotated or partially occluded faces; use `--model cnn` for better accuracy
-
-2. **Reverse Image Search**
-   - Results depend heavily on the person's online presence — if someone has no photos online, no matches will be found
-   - SerpAPI free tier is limited to 250 searches/month
-   - Google Lens results may vary by region and over time
-
-3. **Blockchain**
-   - Uses Sepolia testnet (not mainnet) — transactions have no real monetary value
-   - Requires free Sepolia ETH from a faucet
-   - Transaction confirmation takes ~15-30 seconds
-   - String data stored on-chain is truncated to 256 characters to manage gas costs
-
-4. **Image Upload**
-   - ImgBB is used as a temporary image host — uploaded images may eventually expire
-   - The cropped face must be publicly accessible for Google Lens to process it
-
-5. **Privacy**
-   - The pipeline uploads face crops to a public image host and sends them to Google
-   - On-chain records are publicly visible on the Sepolia blockchain
-   - Not suitable for sensitive/private data without additional privacy measures
+- **Developer:** Anubhav Akhil
+- **Email:** [meanubhavakhil@gmail.com](mailto:meanubhavakhil@gmail.com)
+- **GitHub:** [@Anubhav-Akhil](https://github.com/Anubhav-Akhil)
+- **Project:** [FaceChain on GitHub](https://github.com/Anubhav-Akhil/FaceChain)
+- **Hackathon:** HH Goa 2026 — Task 3
 
 ---
 
-## 📜 License
+## 📄 License
 
-MIT License — see individual library licenses for dependencies.
-
----
-
-*Built for HH Goa 2026 Shortlisting Task 3*
+This project is licensed under the [MIT License](LICENSE) — see the LICENSE file for details.

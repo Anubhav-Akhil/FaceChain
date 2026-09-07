@@ -142,6 +142,23 @@ class BlockchainClient:
 
         console.print(f"   Data hash (SHA-256): 0x{data_hash_hex}")
 
+        # Check if record already exists on-chain to prevent contract revert
+        try:
+            already_exists = self.contract.functions.verifyMatch(data_hash_bytes).call()
+            if already_exists:
+                console.print(f"   [bold green]✓ Record is ALREADY registered on-chain for hash 0x{data_hash_hex}[/]")
+                console.print(f"   Skipping duplicate transaction (tamper-proof record already exists).")
+                return {
+                    "tx_hash": "already_registered",
+                    "data_hash": data_hash_hex,
+                    "block": "Existing Block",
+                    "gas_used": 0,
+                    "already_registered": True,
+                    "etherscan": f"https://sepolia.etherscan.io/address/{self.contract.address}",
+                }
+        except Exception as check_err:
+            console.print(f"   [dim]Pre-check error (proceeding to tx): {check_err}[/]")
+
         # Build the transaction
         match_source = match_data.get("link", "")[:256]   # Limit string length
         match_title = match_data.get("title", "")[:256]

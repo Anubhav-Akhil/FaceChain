@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FaceChain — End-to-end biometric identity verification: AI face detection, Google Lens cross-web search, and immutable Ethereum Sepolia blockchain registration.">
+  <title>FaceChain · Biometric Intelligence</title>
+  <!-- Google Fonts: Poppins (Exact match to reference design) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body>
+
+  <!-- ═════════════════════════════════════════════════════════════
+       HERO SECTION — PURPLE FLUID WAVE DESIGN
+       ═════════════════════════════════════════════════════════════ -->
+  <header class="hero-section" id="hero">
+
+    <!-- Fluid Organic Wave SVG Canvas Backdrop -->
+    <div class="hero-wave-canvas">
+      <svg class="hero-wave-svg" viewBox="0 0 1440 640" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Main Hero Vibrant Purple Gradient -->
+          <linearGradient id="heroPurpleGrad" x1="720" y1="0" x2="720" y2="640" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#581c87"/>
+            <stop offset="30%" stop-color="#6b21a8"/>
+            <stop offset="65%" stop-color="#7c3aed"/>
+            <stop offset="90%" stop-color="#8b5cf6"/>
+            <stop offset="100%" stop-color="#9d4edd"/>
+          </linearGradient>
+
+          <!-- Outer Pastel Lavender Gradient -->
+          <linearGradient id="outerLavenderGrad" x1="0" y1="0" x2="1440" y2="640" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#f3e8ff" stop-opacity="0.95"/>
+            <stop offset="50%" stop-color="#ede9fe" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#e9d5ff" stop-opacity="0.95"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Layer 1: Outer Soft Lavender Wave Lobe -->
+        <path d="M 0 0
+                 L 1440 0
+                 L 1440 180
+                 C 1370 230, 1290 260, 1260 330
+                 C 1220 400, 1250 470, 1290 530
+                 C 1330 590, 1230 630, 1110 590
+                 C 1000 550, 930 470, 850 510
+                 C 790 540, 760 620, 720 640
+                 C 680 620, 650 540, 590 510
+                 C 510 470, 440 550, 330 590
+                 C 210 630, 110 590, 150 530
+                 C 190 470, 220 400, 180 330
+                 C 150 260, 70 230, 0 180
+                 Z" fill="url(#outerLavenderGrad)" />
+
+        <!-- Layer 2: Mid Translucent Violet Wave Lobe -->
+        <path d="M 0 0
+                 L 1440 0
+                 L 1440 140
+                 C 1380 190, 1310 220, 1280 290
+                 C 1240 360, 1270 430, 1260 490
+                 C 1230 550, 1160 580, 1060 540
+                 C 970 500, 900 430, 830 470
+                 C 780 500, 750 580, 720 610
+                 C 690 580, 660 500, 610 470
+                 C 540 430, 470 500, 380 540
+                 C 280 580, 210 550, 180 490
+                 C 170 430, 200 360, 160 290
+                 C 130 220, 60 190, 0 140
+                 Z" fill="rgba(192, 132, 252, 0.35)" />
+
+        <!-- Layer 3: Main Vibrant Purple Hero Body (with deep dipping center tongue) -->
+        <path d="M 0 0
+                 L 1440 0
+                 L 1440 110
+                 C 1390 170, 1330 200, 1290 270
+                 C 1250 340, 1280 410, 1230 460
+                 C 1180 510, 1110 520, 1020 480
+                 C 950 440, 890 390, 810 430
+                 C 770 460, 750 535, 720 575
+                 C 690 535, 670 460, 630 430
+                 C 550 390, 490 440, 420 480
+                 C 330 520, 260 510, 210 460
+                 C 160 410, 190 340, 150 270
+                 C 110 200, 50 170, 0 110
+                 Z" fill="url(#heroPurpleGrad)" />
+
+        <!-- Layer 4: Upper Interior Fluid Wave Swirl -->
+        <path d="M 0 0
+                 L 1440 0
+                 L 1440 70
+                 C 1260 210, 1040 190, 870 270
+                 C 730 330, 590 300, 430 370
+                 C 280 430, 140 400, 0 340
+                 Z" fill="rgba(255, 255, 255, 0.07)" />
+      </svg>
+    </div>
+
+    <!-- ── Navigation Bar (Inside Top Hero) ───────────────────── -->
+    <nav class="hero-nav">
+      <div class="nav-left">
+        <!-- Floating Circular Crown Badge (matches reference) -->
+        <div class="crown-badge" title="FaceChain Pro">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#FFC837">
+            <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+          </svg>
+        </div>
+
+        <!-- 6-Petal Asterisk Logo + Brand Name (matches reference) -->
+        <a href="#hero" class="brand-logo">
+          <svg class="brand-logo__asterisk" viewBox="0 0 36 36" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="2" width="6" height="32" rx="3" fill="#ffffff" />
+            <rect x="15" y="2" width="6" height="32" rx="3" fill="#ffffff" transform="rotate(60 18 18)" />
+            <rect x="15" y="2" width="6" height="32" rx="3" fill="#ffffff" transform="rotate(120 18 18)" />
+          </svg>
+          <span class="brand-logo__text">FACECHAIN</span>
+        </a>
+      </div>
+
+      <!-- Navigation Links (matches reference typography) -->
+      <div class="nav-links">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#upload-section" class="nav-link">Pipeline</a>
+        <a href="#results-section" class="nav-link">Results</a>
+        <a href="#matches-section" class="nav-link">Matches</a>
+        <a href="#blockchain-anchor" class="nav-link">Blockchain</a>
+      </div>
+
+      <!-- Right Action / Utility Icons (matches reference) -->
+      <div class="nav-actions">
+        <!-- 1. Shield: Scroll to Verification Pipeline -->
+        <a href="#pipeline-section" class="nav-action-btn" id="nav-btn-verify" title="View Verification Pipeline">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </a>
+        <!-- 2. Phone: Support / Contact Modal -->
+        <button type="button" class="nav-action-btn" id="nav-btn-phone" title="Contact & Support">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </button>
+        <!-- 3. Mail: Direct Email Client -->
+        <a href="mailto:meanubhavakhil@gmail.com?subject=FaceChain%20Inquiry" class="nav-action-btn" id="nav-btn-email" title="Email: meanubhavakhil@gmail.com">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+        <!-- 4. Share: Share Link / Copy to Clipboard -->
+        <button type="button" class="nav-action-btn" id="nav-btn-share" title="Share FaceChain">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+        </button>
+        <!-- 5. Globe: Sepolia Contract on Etherscan -->
+        <a href="https://sepolia.etherscan.io/address/0x53f3451AC38F101c7faE5F252b30B24b29A0d644" target="_blank" rel="noopener" class="nav-action-btn" id="nav-btn-globe" title="Sepolia Contract Explorer">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </a>
+      </div>
+    </nav>
+
+    <!-- ── Hero Centerpiece (Title, Description, CTA Button) ──── -->
+    <div class="hero-centerpiece">
+      <div class="hero-tag">HH GOA 2026 · TASK 3</div>
+
+      <!-- Two-tier Headline matching reference with project content -->
+      <h1 class="hero-headline">
+        <span class="hero-headline__top">FaceChain</span>
+        <span class="hero-headline__bottom">Biometric Verification Pipeline</span>
+      </h1>
+
+      <p class="hero-description">
+        An end-to-end AI biometric verification system. Detect faces using deep learning, search cross-web visual footprints with Google Lens, and anchor cryptographic proofs onto Ethereum Sepolia.
+      </p>
+
+      <!-- Pill Shaped CTA Button: Contact redirects to meanubhavakhil@gmail.com -->
+      <div class="hero-cta-wrapper">
+        <a href="mailto:meanubhavakhil@gmail.com" class="hero-pill-btn" id="hero-contact-btn">
+          <span>CONTACT</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═════════════════════════════════════════════════════════════
+       APPLICATION CONTENT WRAPPER (MATCHING PURPLE/WHITE THEME)
+       ═════════════════════════════════════════════════════════════ -->
+  <main class="app-main">
+    <div class="app-container">
+
+      <!-- ── Error Banner ─────────────────────────────────────── -->
+      <div class="error-banner" id="error-banner">
+        <span class="error-banner__icon">⚠️</span>
+        <span class="error-banner__text" id="error-text"></span>
+      </div>
+
+      <!-- ── Summary Bar ──────────────────────────────────────── -->
+      <div class="summary-bar" id="summary-bar">
+        <div class="summary-bar__item">
+          <span>⏱️</span>
+          <span>Pipeline completed in <strong id="summary-time">—</strong></span>
+        </div>
+        <div class="summary-bar__divider"></div>
+        <div class="summary-bar__item">
+          <span>🕐</span>
+          <span id="summary-timestamp">—</span>
+        </div>
+      </div>
+
+      <!-- ── Upload Section ───────────────────────────────────── -->
+      <section class="upload-section" id="upload-section">
+        <div class="theme-card upload-card">
+          <div class="card-header">
+            <div class="card-header__icon">📷</div>
+            <div class="card-header__info">
+              <h2 class="card-header__title">Upload Face Image</h2>
+              <p class="card-header__subtitle">Select an image to detect faces, reverse-search visual matches, and anchor on Ethereum</p>
+            </div>
+          </div>
+
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="file-input" accept="image/*">
+            <div class="upload-zone__circle-icon">📁</div>
+            <div class="upload-zone__text">
+              Drag & drop an image here, or <strong>click to browse</strong>
+            </div>
+            <div class="upload-zone__hint">
+              Supports JPEG, PNG · Max 16 MB
+            </div>
+          </div>
+
+          <div class="upload-preview" id="upload-preview">
+            <div class="upload-preview__img-wrap">
+              <img id="preview-img" src="" alt="Preview">
+            </div>
+            <div class="upload-preview__info">
+              <div class="upload-preview__name" id="preview-name"></div>
+              <div class="upload-preview__size" id="preview-size"></div>
+            </div>
+          </div>
+
+          <div class="controls-row">
+            <div class="model-select">
+              <label for="model-select">Detection model:</label>
+              <select id="model-select">
+                <option value="dnn" selected>DNN (Accurate)</option>
+                <option value="haar">Haar (Fast)</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary" id="run-btn" disabled>
+              <div class="spinner"></div>
+              <span class="btn-text">🚀 Run Pipeline</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Pipeline Progress Stepper ────────────────────────── -->
+      <section class="pipeline-section" id="pipeline-section">
+        <div class="theme-card">
+          <div class="card-header">
+            <div class="card-header__icon">⚡</div>
+            <div class="card-header__info">
+              <h2 class="card-header__title">Pipeline Progress</h2>
+              <p class="card-header__subtitle">Real-time execution across 5 automated verification stages</p>
+            </div>
+          </div>
+
+          <!-- Overall Animated Progress Bar -->
+          <div class="pipeline-progress-bar-wrap">
+            <div class="pipeline-progress-meta">
+              <span class="pipeline-progress-status" id="pipeline-progress-status">Ready to start</span>
+              <span class="pipeline-progress-percent" id="pipeline-progress-percent">0%</span>
+            </div>
+            <div class="pipeline-progress-track">
+              <div class="pipeline-progress-fill" id="pipeline-progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="pipeline-stepper">
+            <!-- Stage 1: Face Detection -->
+            <div class="pipeline-step pending" id="step-face_detection">
+              <div class="pipeline-step__icon-wrap">🧠</div>
+              <div class="pipeline-step__connector"></div>
+              <div class="pipeline-step__content">
+                <div class="pipeline-step__label">Face Detect</div>
+                <div class="pipeline-step__status">Waiting…</div>
+              </div>
+            </div>
+
+            <!-- Stage 2: Image Upload -->
+            <div class="pipeline-step pending" id="step-image_upload">
+              <div class="pipeline-step__icon-wrap">☁️</div>
+              <div class="pipeline-step__connector"></div>
+              <div class="pipeline-step__content">
+                <div class="pipeline-step__label">Upload</div>
+                <div class="pipeline-step__status">Waiting…</div>
+              </div>
+            </div>
+
+            <!-- Stage 3: Reverse Search -->
+            <div class="pipeline-step pending" id="step-reverse_search">
+              <div class="pipeline-step__icon-wrap">🔍</div>
+              <div class="pipeline-step__connector"></div>
+              <div class="pipeline-step__content">
+                <div class="pipeline-step__label">Search</div>
+                <div class="pipeline-step__status">Waiting…</div>
+              </div>
+            </div>
+
+            <!-- Stage 4: Blockchain -->
+            <div class="pipeline-step pending" id="step-blockchain">
+              <div class="pipeline-step__icon-wrap">⛓️</div>
+              <div class="pipeline-step__connector"></div>
+              <div class="pipeline-step__content">
+                <div class="pipeline-step__label">Blockchain</div>
+                <div class="pipeline-step__status">Waiting…</div>
+              </div>
+            </div>
+
+            <!-- Stage 5: Verification -->
+            <div class="pipeline-step pending" id="step-verification">
+              <div class="pipeline-step__icon-wrap">✅</div>
+              <div class="pipeline-step__content">
+                <div class="pipeline-step__label">Verify</div>
+                <div class="pipeline-step__status">Waiting…</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Results Section ──────────────────────────────────── -->
+      <section class="results-section" id="results-section">
+        <div class="section-title-wrap">
+          <div class="section-title__icon">📊</div>
+          <h2 class="section-title__text">Pipeline Results</h2>
+        </div>
+
+        <div class="results-grid">
+          <!-- Face Detection Result -->
+          <div class="result-card">
+            <div class="result-card__header">
+              <div class="result-card__icon purple">🧠</div>
+              <div class="result-card__title">Face Detection</div>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Faces detected</span>
+              <span class="result-row__value" id="fd-faces">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Encoding</span>
+              <span class="result-row__value" id="fd-encoding">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Location</span>
+              <span class="result-row__value" id="fd-location">—</span>
+            </div>
+            <div class="crop-preview">
+              <img id="crop-img" class="crop-preview__img" src="" alt="Cropped face" style="display:none">
+            </div>
+          </div>
+
+          <!-- Image Upload Result -->
+          <div class="result-card">
+            <div class="result-card__header">
+              <div class="result-card__icon purple">☁️</div>
+              <div class="result-card__title">Image Upload</div>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Public URL</span>
+              <span class="result-row__value" id="iu-url">—</span>
+            </div>
+          </div>
+
+          <!-- Reverse Search Result -->
+          <div class="result-card">
+            <div class="result-card__header">
+              <div class="result-card__icon purple">🔍</div>
+              <div class="result-card__title">Reverse Search</div>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Best Match</span>
+              <span class="result-row__value" id="rs-title">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Link</span>
+              <span class="result-row__value" id="rs-link">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Source</span>
+              <span class="result-row__value" id="rs-source">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Type</span>
+              <span class="result-row__value" id="rs-badge">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Total Matches</span>
+              <span class="result-row__value" id="rs-matches">—</span>
+            </div>
+          </div>
+
+          <!-- Blockchain Result -->
+          <div class="result-card" id="blockchain-anchor">
+            <div class="result-card__header">
+              <div class="result-card__icon purple">⛓️</div>
+              <div class="result-card__title">Blockchain Registration</div>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Status</span>
+              <span class="result-row__value" id="bc-status">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Block</span>
+              <span class="result-row__value" id="bc-block">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Gas Used</span>
+              <span class="result-row__value" id="bc-gas">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Tx Hash</span>
+              <span class="result-row__value" id="bc-tx">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Data Hash</span>
+              <span class="result-row__value" id="bc-hash">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Etherscan</span>
+              <span class="result-row__value">
+                <a id="bc-etherscan-link" class="etherscan-btn" href="#" target="_blank" rel="noopener" style="display:none">
+                  View on Sepolia ↗
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <!-- Verification Result -->
+          <div class="result-card full-width" id="vf-anchor">
+            <div class="result-card__header">
+              <div class="result-card__icon purple">✅</div>
+              <div class="result-card__title">On-Chain Verification</div>
+              <div id="vf-badge"></div>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Registrant</span>
+              <span class="result-row__value" id="vf-registrant">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-row__label">Timestamp</span>
+              <span class="result-row__value" id="vf-timestamp">—</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Matched Results Gallery ──────────────────────────── -->
+      <section class="matches-section" id="matches-section">
+        <div class="theme-card">
+          <div class="card-header">
+            <div class="card-header__icon">🔎</div>
+            <div class="card-header__info">
+              <h2 class="card-header__title">All Matched Results</h2>
+              <p class="card-header__subtitle">Visual web matches detected via Google Lens reverse image search</p>
+            </div>
+          </div>
+
+          <div class="matches-header">
+            <div class="matches-count" id="matches-total"></div>
+            <div class="matches-filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="social">Social Media</button>
+              <button class="filter-btn" data-filter="web">Web</button>
+            </div>
+          </div>
+
+          <div class="matches-grid" id="matches-grid"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────────── -->
+  <footer class="app-footer">
+    <div class="app-footer__inner">
+      <div class="brand-logo footer-logo">
+        <svg class="brand-logo__asterisk" viewBox="0 0 36 36" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="15" y="2" width="6" height="32" rx="3" fill="#7c3aed" />
+          <rect x="15" y="2" width="6" height="32" rx="3" fill="#7c3aed" transform="rotate(60 18 18)" />
+          <rect x="15" y="2" width="6" height="32" rx="3" fill="#7c3aed" transform="rotate(120 18 18)" />
+        </svg>
+        <span class="brand-logo__text footer-text">FACECHAIN</span>
+      </div>
+      <p class="footer-copy">© 2026 FaceChain · Biometric AI & Ethereum Sepolia Blockchain Verification Pipeline</p>
+    </div>
+  </footer>
+
+  <!-- ── Contact / Support Modal ──────────────────────────────── -->
+  <div class="contact-modal" id="contact-modal" aria-hidden="true">
+    <div class="contact-modal__backdrop" id="contact-modal-backdrop"></div>
+    <div class="contact-modal__card">
+      <button type="button" class="contact-modal__close" id="contact-modal-close" aria-label="Close modal">✕</button>
+      <div class="contact-modal__avatar">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </div>
+      <h3 class="contact-modal__title">Get In Touch</h3>
+      <p class="contact-modal__subtitle">FaceChain Lead Developer</p>
+      <div class="contact-modal__name">Anubhav Akhil</div>
+
+      <div class="contact-modal__email-box">
+        <span class="contact-modal__email">meanubhavakhil@gmail.com</span>
+        <button type="button" class="copy-btn" id="modal-copy-email-btn" onclick="copyText('meanubhavakhil@gmail.com')">Copy</button>
+      </div>
+
+      <div class="contact-modal__actions">
+        <a href="mailto:meanubhavakhil@gmail.com?subject=FaceChain%20Inquiry" class="btn btn-primary" style="width: 100%;">
+          ✉️ Send Email
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -16,3 +16,6 @@ py-solc-x
 # Config & CLI
 python-dotenv
 rich
+
+# Web frontend
+flask
