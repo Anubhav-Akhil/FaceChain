@@ -1486,37 +1486,67 @@ button {
   border-color: var(--purple-300);
 }
 
-.match-thumb {
+.match-thumb,
+.match-card__thumb {
   width: 100%;
-  height: 160px;
+  height: 180px;
   background: var(--purple-50);
   overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.match-thumb-img {
+.match-thumb-img,
+.match-thumb img,
+.match-card__thumb img,
+.match-card__thumb-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.35s ease;
+}
+
+.match-card:hover .match-thumb-img,
+.match-card:hover .match-thumb img,
+.match-card:hover .match-card__thumb img,
+.match-card:hover .match-card__thumb-img {
+  transform: scale(1.06);
+}
+
+.match-card__thumb-placeholder {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--purple-50);
 }
 
-.match-card:hover .match-thumb-img {
-  transform: scale(1.05);
+.match-card__badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
 }
 
-.match-info {
-  padding: 16px;
+.match-info,
+.match-card__body {
+  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.match-title {
-  font-size: 14px;
+.match-title,
+.match-card__title {
+  font-size: 14.5px;
   font-weight: 600;
   color: var(--text-dark);
-  line-height: 1.35;
+  line-height: 1.4;
   margin-bottom: 8px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1524,8 +1554,23 @@ button {
   overflow: hidden;
 }
 
-.match-link {
+.match-source,
+.match-card__source {
   font-size: 12px;
+  font-weight: 600;
+  color: var(--purple-900);
+  background: var(--purple-100);
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 12px;
+}
+
+.match-link,
+.match-card__link {
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--purple-700);
   text-decoration: none;
   word-break: break-all;
@@ -1533,9 +1578,12 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  transition: var(--transition);
 }
 
-.match-link:hover {
+.match-link:hover,
+.match-card__link:hover {
+  color: var(--purple-900);
   text-decoration: underline;
 }
 
@@ -1546,15 +1594,6 @@ button {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid var(--border-light);
-}
-
-.match-source {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--purple-900);
-  background: var(--purple-100);
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
 }
 
 .match-type-badge {

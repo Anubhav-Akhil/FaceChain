@@ -685,8 +685,10 @@ function renderMatches(data) {
     card.style.animationDelay = `${i * 50}ms`;
     card.style.animation = 'fadeSlideIn 0.4s ease-out both';
 
-    const thumbHtml = match.thumbnail
-      ? `<img src="${match.thumbnail}" alt="${escapeHtml(match.title || '')}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'match-card__thumb-placeholder\\'>${THUMB_SVG}</div>'">`
+    const hasThumbnail = Boolean(match.thumbnail);
+    const thumbHtml = hasThumbnail
+      ? `<img class="match-thumb-img" src="${escapeHtml(match.thumbnail)}" alt="${escapeHtml(match.title || 'Visual match')}" loading="lazy" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';">
+         <div class="match-card__thumb-placeholder" style="display: none;">${THUMB_SVG}</div>`
       : `<div class="match-card__thumb-placeholder">${THUMB_SVG}</div>`;
 
     const badgeHtml = isSocial
@@ -694,14 +696,14 @@ function renderMatches(data) {
       : '<span class="badge badge-web">Web</span>';
 
     card.innerHTML = `
-      <div class="match-card__thumb">
+      <div class="match-thumb match-card__thumb">
         ${thumbHtml}
         <div class="match-card__badge">${badgeHtml}</div>
       </div>
-      <div class="match-card__body">
-        <div class="match-card__title">${escapeHtml(match.title || 'Untitled')}</div>
-        <div class="match-card__source">${escapeHtml(match.source || getDomain(match.link))}</div>
-        ${match.link ? `<a class="match-card__link" href="${match.link}" target="_blank" rel="noopener">View source →</a>` : ''}
+      <div class="match-info match-card__body">
+        <div class="match-title match-card__title">${escapeHtml(match.title || 'Untitled')}</div>
+        <div class="match-source match-card__source">${escapeHtml(match.source || getDomain(match.link))}</div>
+        ${match.link ? `<a class="match-link match-card__link" href="${escapeHtml(match.link)}" target="_blank" rel="noopener">View source →</a>` : ''}
       </div>
     `;
 
